@@ -1,0 +1,17 @@
+pipeline{
+agent{ label 'windows'}
+stages{
+stage('Checkout'){
+  steps{
+   git 'https://github.com/nagamay16/FullStackAnguloreSpringBoot.git'
+  }
+}
+ stage('Build'){
+  agent{docker 'maven:3.5-alpine'}
+   steps{
+   sh 'mvn clean package'
+   junit '**/target/surefire-reports/TEST-*.xml'
+   }
+  }
+ }
+}
